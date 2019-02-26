@@ -1,0 +1,10 @@
+[Unit]
+Description=qBittorrent Daemon Service
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/qbittorrent-nox --webui-port=9898
+
+[Install]
+WantedBy=multi-user.target

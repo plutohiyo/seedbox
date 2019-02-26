@@ -1,0 +1,120 @@
+templates:
+  freespace:
+    free_space:
+      path: /home/plutohiyo
+      space: 10240
+
+  mixsize:
+    content_size:
+      min: 10240
+      max: 512000
+      strict: no
+
+  smallsize:
+    content_size:
+      max: 51200
+      strict: no
+
+  middlesize:
+    content_size:
+      min: 51200
+      max: 512000
+      strict: no
+
+  bigsize:
+    content_size:
+      min: 512000
+      max: 1024000
+      strict: no
+
+  qb:
+    qbittorrent:
+      path: /home/plutohiyo/Downloads/
+      host: localhost
+      port: 9898
+      username: 
+      password: 
+
+  tr:
+    transmission:
+      path: /home/plutohiyo/Downloads/
+      host: localhost
+      port: 9999
+      username: 
+      password: 
+
+tasks:
+  HDChina-Auto:
+    rss: 
+    if:
+      - "'HDCTV' in title": accept
+      - "'HDChina' in title": accept
+    template:
+      - freespace
+      - smallsize
+      - qb
+    qbittorrent:
+      label: HDChina
+
+  OpenCD-Auto:
+    rss: 
+    accept_all: yes
+    template:
+      - qb
+    qbittorrent:
+      path: /home/plutohiyo/Downloads/OpenCD
+      label: OpenCD
+
+  CMCT-Bookmarks:
+    rss: 
+    accept_all: yes
+    template:
+      - freespace
+      - qb
+    qbittorrent:
+      label: CMCT
+
+  TTG-Bookmarks:
+    rss: 
+    accept_all: yes
+    template:
+      - freespace
+      - qb
+    qbittorrent:
+      label: TTG
+      
+  HDChina-Bookmarks:
+    rss: 
+    accept_all: yes
+    template:
+      - freespace
+      - qb
+    qbittorrent:
+      label: HDChina
+
+  CHD-Bookmarks:
+    rss: 
+    accept_all: yes
+    template:
+      - freespace
+      - qb
+    qbittorrent:
+      label: CHD
+
+  Ourbits-Bookmarks:
+    rss: 
+    accept_all: yes
+    template:
+      - freespace
+      - qb
+    qbittorrent:
+      label: Ourbits
+
+  U2-Bookmarks:
+    rss: 
+    accept_all: yes
+    template:
+      - freespace
+      - qb
+    qbittorrent:
+      label: U2

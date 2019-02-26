@@ -1,0 +1,14 @@
+[Unit]
+Description=Deluge Bittorrent Client Web Interface
+Documentation=man:deluge-web
+After=network-online.target deluged.service
+Wants=deluged.service
+[Service]
+Type=simple
+User=root
+Group=root
+UMask=027
+ExecStart=/usr/bin/deluge-web -l /tmp/deluge-web.log -L warning --port=9797
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

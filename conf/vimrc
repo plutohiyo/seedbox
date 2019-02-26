@@ -1,0 +1,13 @@
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set encoding=utf-8
+filetype on
+set nocp
+set ru
+set nu
+syntax on
+set sw=4
+set ts=4
+set hlsearch
+set incsearch
+set ignorecase
+set history=100

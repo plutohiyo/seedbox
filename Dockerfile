@@ -23,7 +23,7 @@ COPY deluge-patch/addtorrentdialog.py /usr/lib/python2.7/dist-packages/deluge/ui
 COPY deluge-patch/add_torrent_dialog.glade /usr/lib/python2.7/dist-packages/deluge/ui/gtkui/glade/add_torrent_dialog.glade
 COPY conf/deluge-log-conf /etc/logrotate.d/deluge
 
-RUN	&& cd /usr/lib/python2.7/dist-packages/deluge/core && rm torrentmanager.pyc && python2.7 -m py_compile torrentmanager.py \
+RUN	cd /usr/lib/python2.7/dist-packages/deluge/core && rm torrentmanager.pyc && python2.7 -m py_compile torrentmanager.py \
 	&& cd /usr/lib/python2.7/dist-packages/deluge/ui/gtkui/ && rm addtorrentdialog.pyc && python2.7 -m py_compile addtorrentdialog.py \
 	&& systemctl enable /etc/systemd/system/qbittorrent.service \
 	&& systemctl start qbittorrent \

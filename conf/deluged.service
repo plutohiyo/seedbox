@@ -3,11 +3,13 @@ Description=Deluge Bittorrent Client Daemon
 Documentation=man:deluged
 After=network-online.target
 [Service]
+LimitNOFILE=888888
 Type=simple
 User=root
 Group=root
 UMask=007
 ExecStart=/usr/bin/deluged -d -l /tmp/deluged.log -L warning
+ExecStop=/usr/bin/killall -w -s 9 /usr/bin/deluged
 Restart=on-failure
 # Time to wait before forcefully stopped.
 TimeoutStopSec=300

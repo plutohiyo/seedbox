@@ -4,7 +4,9 @@ After=network.target
 
 [Service]
 User=root
+LimitNOFILE=888888
 ExecStart=/usr/bin/qbittorrent-nox --webui-port=9898
+ExecStop=/usr/bin/killall -w -s 9 /usr/bin/qbittorrent-nox
 
 [Install]
 WantedBy=multi-user.target

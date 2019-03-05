@@ -9,6 +9,7 @@ User=root
 Group=root
 UMask=027
 ExecStart=/usr/bin/deluge-web -l /tmp/deluge-web.log -L warning --port=9797
+ExecStop=/usr/bin/killall -w -s 9 /usr/bin/deluge-web
 Restart=on-failure
 [Install]
 WantedBy=multi-user.target

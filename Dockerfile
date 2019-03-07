@@ -13,20 +13,24 @@ RUN	sed -i 's/#\ deb-src\ http:\/\/archive.ubuntu.com\/ubuntu\/\ xenial\ univers
 	&& apt-get update \
 	&& apt-get install -y qbittorrent qbittorrent-nox deluged deluge-web deluge-console
 
+COPY pkg/transmission_2.94-skip-ubuntu18.04-1_amd64.deb /root/ 
 COPY conf/limits.conf /etc/security/limits.conf
 COPY conf/*.service /etc/systemd/system/
-COPY conf/system.conf /etc/systemd/system.conf
 COPY deluge-patch/deluge-all.js /usr/lib/python2.7/dist-packages/deluge/ui/web/js/deluge-all.js
 COPY deluge-patch/torrentmanager.py /usr/lib/python2.7/dist-packages/deluge/core/torrentmanager.py
 COPY deluge-patch/addtorrentdialog.py /usr/lib/python2.7/dist-packages/deluge/ui/gtkui/addtorrentdialog.py
 COPY deluge-patch/add_torrent_dialog.glade /usr/lib/python2.7/dist-packages/deluge/ui/gtkui/glade/add_torrent_dialog.glade
 COPY conf/deluge-log-conf /etc/logrotate.d/deluge
 
-RUN	cd /usr/lib/python2.7/dist-packages/deluge/core && python2.7 -m py_compile torrentmanager.py \
+RUN	dpkg -i /root/transmission_2.94-skip-ubuntu18.04-1_amd64.deb \
+	&& rm /root/transmission_2.94-skip-ubuntu18.04-1_amd64.deb \
+	&& apt-get install -y psmisc libevent-dev \
+	&& cd /usr/lib/python2.7/dist-packages/deluge/core && python2.7 -m py_compile torrentmanager.py \
 	&& cd /usr/lib/python2.7/dist-packages/deluge/ui/gtkui && python2.7 -m py_compile addtorrentdialog.py \
 	&& systemctl enable /etc/systemd/system/qbittorrent.service \
 	&& systemctl enable /etc/systemd/system/deluged.service \
 	&& systemctl enable /etc/systemd/system/deluge-web.service \
+	&& systemctl enable /etc/systemd/system/transmission.service \
 	&& pip install --upgrade pip \
 	&& hash -r pip \
 	&& pip install --upgrade virtualenv \
@@ -42,6 +46,8 @@ RUN	cd /usr/lib/python2.7/dist-packages/deluge/core && python2.7 -m py_compile t
 	&& sed -i 's/^PermitRootLogin /#PermitRootLogin /g' /etc/ssh/sshd_config \
 	&& echo "Port 2022" >> /etc/ssh/sshd_config \
 	&& echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+RUN	echo 1 | bash -c "$(wget --no-check-certificate -qO- https://github.com/ronggang/transmission-web-control/raw/master/release/install-tr-control.sh)"
 
 VOLUME ["/download", "/root"] 
 

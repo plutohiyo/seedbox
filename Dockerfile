@@ -13,7 +13,7 @@ RUN	sed -i 's/#\ deb-src\ http:\/\/archive.ubuntu.com\/ubuntu\/\ xenial\ univers
 	&& apt-get update \
 	&& apt-get install -y qbittorrent qbittorrent-nox deluged deluge-web deluge-console
 
-COPY pkg/transmission_2.94-skip-ubuntu18.04-1_amd64.deb /root/ 
+COPY pkg/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb /root/ 
 COPY conf/limits.conf /etc/security/limits.conf
 COPY conf/*.service /etc/systemd/system/
 COPY deluge-patch/deluge-all.js /usr/lib/python2.7/dist-packages/deluge/ui/web/js/deluge-all.js
@@ -22,9 +22,9 @@ COPY deluge-patch/addtorrentdialog.py /usr/lib/python2.7/dist-packages/deluge/ui
 COPY deluge-patch/add_torrent_dialog.glade /usr/lib/python2.7/dist-packages/deluge/ui/gtkui/glade/add_torrent_dialog.glade
 COPY conf/deluge-log-conf /etc/logrotate.d/deluge
 
-RUN	dpkg -i /root/transmission_2.94-skip-ubuntu18.04-1_amd64.deb \
-	&& rm /root/transmission_2.94-skip-ubuntu18.04-1_amd64.deb \
-	&& apt-get install -y psmisc libevent-dev \
+RUN	dpkg -i /root/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb \
+	&& rm /root/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb \
+	&& apt-get install -y psmisc libevent-dev libminiupnpc-dev \
 	&& cd /usr/lib/python2.7/dist-packages/deluge/core && python2.7 -m py_compile torrentmanager.py \
 	&& cd /usr/lib/python2.7/dist-packages/deluge/ui/gtkui && python2.7 -m py_compile addtorrentdialog.py \
 	&& systemctl enable /etc/systemd/system/qbittorrent.service \

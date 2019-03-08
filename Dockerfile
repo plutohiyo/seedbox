@@ -47,7 +47,8 @@ RUN	dpkg -i /root/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb \
 	&& echo "Port 2022" >> /etc/ssh/sshd_config \
 	&& echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
-RUN	echo 1 | bash -c "$(wget --no-check-certificate -qO- https://github.com/ronggang/transmission-web-control/raw/master/release/install-tr-control.sh)"
+RUN	echo 1 | bash -c "$(wget --no-check-certificate -qO- https://github.com/ronggang/transmission-web-control/raw/master/release/install-tr-control.sh)" \
+	&& sed -i "s/\"speed\"));system.serverSessionStats=a;/\"speed\"));\$(\'title\').html(\"D:\"+formatSize(a.downloadSpeed,false,\"speed\")+\", U:\"+formatSize(a.uploadSpeed,false,\"speed\"));system.serverSessionStats=a;/g"  /usr/local/share/transmission/web/tr-web-control/script/min/system.min.js
 
 VOLUME ["/download", "/root"] 
 

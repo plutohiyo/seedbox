@@ -35,11 +35,11 @@ RUN	dpkg -i /root/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb \
 	&& hash -r pip \
 	&& pip install --upgrade virtualenv \
 	&& pip install --upgrade setuptools \
-	&& pip install flexget \
-	&& pip install python-qbittorrent \
-	&& pip install pushbullet.py \
-	&& pip install beautifulsoup4 \
-	&& pip install -U selenium \
+	&& apt-get install -y python3 python3-pip \
+	&& pip3 install --upgrade pip \
+	&& pip3 install --upgrade virtualenv \
+	&& pip3 install --upgrade setuptools \
+	&& cd /root && virtualenv flexget && /root/flexget/bin/pip3 install flexget \
 	&& apt-get autoremove -y \
 	&& apt-get autoclean -y  \
 	&& sed -i 's/^Port /#Port /g' /etc/ssh/sshd_config \

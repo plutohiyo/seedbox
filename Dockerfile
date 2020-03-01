@@ -5,12 +5,11 @@ MAINTAINER plutohiyo@gmail.com
 RUN	sed -i 's/#\ deb-src\ http:\/\/archive.ubuntu.com\/ubuntu\/\ xenial\ universe/deb-src\ http:\/\/archive.ubuntu.com\/ubuntu\/\ xenial\ universe/' /etc/apt/sources.list \
 	&& echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections \
 	&& echo "postfix postfix/mailname string 'root'" | debconf-set-selections \
-	&& buildDeps='sysstat lsof iotop nload vim smartmontools curl vnstat git iperf3 wget net-tools iputils-ping git screen python nethogs systemd locate python-pip openssh-server software-properties-common' \
-	&& apt-get update \
-	&& apt-get install -y $buildDeps \
+	&& buildDeps='sysstat lsof iotop nload vim smartmontools curl vnstat git iperf3 wget net-tools iputils-ping git screen python nethogs systemd locate python-pip python3 python3-pip openssh-server software-properties-common' \
 	&& add-apt-repository -y ppa:qbittorrent-team/qbittorrent-stable \
 	&& add-apt-repository -y ppa:deluge-team/ppa \
-	&& apt-get update \
+        && apt-get update \
+	&& apt-get install -y $buildDeps \
 	&& apt-get install -y qbittorrent qbittorrent-nox deluged deluge-web deluge-console
 
 COPY pkg/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb /root/ 
@@ -35,7 +34,6 @@ RUN	dpkg -i /root/transmission_2.93-skip-ubuntu-18.04-1_amd64.deb \
 	&& hash -r pip \
 	&& pip install --upgrade virtualenv \
 	&& pip install --upgrade setuptools \
-	&& apt-get install -y python3 python3-pip \
 	&& pip3 install --upgrade pip \
 	&& pip3 install --upgrade virtualenv \
 	&& pip3 install --upgrade setuptools \
